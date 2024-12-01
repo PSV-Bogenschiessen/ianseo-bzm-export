@@ -25,6 +25,8 @@ $ClubId = urldecode($ClubId);
 $State = $pageInputs["state"];
 $State = urldecode($State);
 
+$separator = ';';
+
 $query = <<<SQL
 SELECT  
   e.EnFirstName as Name,
@@ -77,10 +79,10 @@ header('Cache-Control: no-store, no-cache, must-revalidate');
 
 $output = fopen('php://output', 'w');
 $headers = array_keys( (array) $r);
-fputcsv($output, $headers);
+fputcsv($output, $headers, $separator);
 
 do {
-    fputcsv($output, (array) $r);
+    fputcsv($output, (array) $r, $separator);
 } while ($r=safe_fetch($q));
 
 fclose($output);
